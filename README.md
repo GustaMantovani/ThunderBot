@@ -49,7 +49,7 @@ ThunderBot is a Discord bot designed to provide information about Yu-Gi-Oh! trad
 
 ## Usage
 
-- Invite ThunderBot to your Discord server.
+- Invite [ThunderBot](https://discord.com/api/oauth2/authorize?client_id=1201190749727887481&permissions=2048&scope=bot) to your Discord server.
 - Use the provided commands in Discord to interact with ThunderBot.
 
 ## Contributing
