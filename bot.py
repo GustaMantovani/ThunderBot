@@ -122,10 +122,12 @@ async def info(ctx, lang, cardName):
             embed.set_thumbnail(url=image_url)
             embed.add_field(name="Card-Type", value=type, inline=True)
             ##relative information 
-            if 'atk' in card_data: #a card having atk implies having def
+            if 'atk' in card_data: 
                 atk = card_data['atk']
-                def_ = card_data['def']
                 embed.add_field(name="ATK", value=atk, inline=True)
+
+            if 'def' in card_data:
+                def_ = card_data['def']
                 embed.add_field(name="DEF", value=def_, inline=True)
 
             if 'level' in card_data:
@@ -199,8 +201,10 @@ async def search(ctx, lang, cardName):
 
                 if 'atk' in card_data: 
                     atk = card_data['atk']
-                    def_ = card_data['def']
                     embed.add_field(name="ATK", value=atk, inline=True)
+
+                if 'def' in card_data:
+                    def_ = card_data['def']
                     embed.add_field(name="DEF", value=def_, inline=True)
 
                 if 'level' in card_data:
@@ -335,7 +339,7 @@ async def on_message(message):
         embed_fr.add_field(name="!search (lang) (nomCarte)", value="Recherche des cartes basées sur une séquence de caractères.", inline=False)
         embed_fr.add_field(name="!prices (lang) (nomCarte)", value="Affiche les prix de la carte spécifiée.", inline=False)  
         await message.channel.send(embed=embed_fr)
-        
+
     # Call the default command processing after the on_message event
     await bot.process_commands(message)
 #
