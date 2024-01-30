@@ -57,6 +57,6 @@ Contributions are welcome! Feel free to open issues or submit pull requests to i
 
 ## Acknowledgments
 
-- Thanks to [Yu-Gi-Oh! ProDeck API](https://db.ygoprodeck.com/api/v7/cardinfo.php) for providing card data.
+- Thanks to [Yu-Gi-Oh! ProDeck API](https://db.ygoprodeck.com) for providing card data.
 - Thanks to [Kraus](https://www.deviantart.com/kraus-illustration) for bot image in discord.
 
