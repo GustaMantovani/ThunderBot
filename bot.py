@@ -5,11 +5,10 @@ import requests
 import os
 from dotenv import load_dotenv
 
-#Realizando um primeiro request antes da aplicação inciar para melhorar o tempo de resposta do bot
-#segundo a documentação oficial do prodeck, esse é o único endpoint necessário
+#Performing an initial request before the application starts to enhance the bot's response time. According to the official prodeck documentation, this is the only required endpoint
 requests.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
 
-#funções
+#functions
 def proDeckAPI_request(params):
     url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
     response = requests.get(url, params=params)
@@ -64,9 +63,9 @@ def search_by_string_and_lang(lang,name):
             'language': lang
         }
     return proDeckAPI_request(params)
-
 #
-#instâncias
+
+#instances
 ##bot
 intents = discord.Intents.default()
 intents.message_content = True
@@ -75,13 +74,14 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 ##channel
 channel = discord.channel.TextChannel
 #
+
 #init
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 #
-#Comandos
-
+    
+#Commands
 @bot.command()
 async def card(ctx, lang, cardName):
     async with channel.typing(ctx):
@@ -111,8 +111,8 @@ async def info(ctx, lang, cardName):
         if data:
             card_data = data['data'][0]
             
-            # Extrair informações da carta
-            ##informações independentes
+            # Extract card info
+            ##independent infos
             name = card_data['name']
             type = card_data['type']
             desc = card_data['desc']
@@ -121,8 +121,8 @@ async def info(ctx, lang, cardName):
             embed = discord.Embed(title=name, description=desc, color=0x7289da)
             embed.set_thumbnail(url=image_url)
             embed.add_field(name="Card-Type", value=type, inline=True)
-            ##informações relativas (nem toda carta possui)
-            if 'atk' in card_data: #uma carta ter ataque implica em ter defesa
+            ##relative information 
+            if 'atk' in card_data: #a card having atk implies having def
                 atk = card_data['atk']
                 def_ = card_data['def']
                 embed.add_field(name="ATK", value=atk, inline=True)
@@ -197,7 +197,7 @@ async def search(ctx, lang, cardName):
                 embed.set_thumbnail(url=image_url)
                 embed.add_field(name="Card-Type", value=type, inline=True)
 
-                if 'atk' in card_data: #uma carta ter ataque implica em ter defesa
+                if 'atk' in card_data: 
                     atk = card_data['atk']
                     def_ = card_data['def']
                     embed.add_field(name="ATK", value=atk, inline=True)
@@ -278,68 +278,68 @@ async def prices(ctx,lang,cardName):
                 await ctx.send("Impossible de trouver des informations sur cette carte.")
 
     await channel.send('Done!')
-#
     
 @bot.event
 async def on_message(message):
-    # Check if the message was sent by the bot to avoid loops
+    #Check if the message was sent by the bot to avoid loops
     if message.author == bot.user:
         return
 
-    # Check if the message is specific
+    #Check if the message is specific
     if message.content == 'ThunderBot ajuda':
-        # Embed message for Portuguese (Brazil)
+        #Embed message for Portuguese (Brazil)
         embed_pt = discord.Embed(title="Comandos disponíveis", description="Lista de comandos disponíveis para usar com o bot:", color=0x7289da)
         embed_pt.add_field(name="!card (lang) (cardName)", value="Retorna a imagem da carta especificada.", inline=False)
         embed_pt.add_field(name="!info (lang) (cardName)", value="Fornece informações detalhadas sobre a carta especificada.", inline=False)
         embed_pt.add_field(name="!tr (original_lang) (cardName) (translate_lang)", value="Traduz o nome da carta de um idioma para outro.", inline=False)
         embed_pt.add_field(name="!search (lang) (cardName)", value="Pesquisa cartas com base em uma sequência de caracteres.", inline=False)
-        embed_pt.add_field(name="!prices (lang) (cardName)", value="Mostra os preços da carta especificada.", inline=False)  # Adicionando o comando prices
+        embed_pt.add_field(name="!prices (lang) (cardName)", value="Mostra os preços da carta especificada.", inline=False)  
         await message.channel.send(embed=embed_pt)
 
     elif message.content == 'ThunderBot help':
-        # Embed message for English
+        #Embed message for English
         embed_en = discord.Embed(title="Available Commands", description="List of available commands to use with the bot:", color=0x7289da)
         embed_en.add_field(name="!card (lang) (cardName)", value="Returns the image of the specified card.", inline=False)
         embed_en.add_field(name="!info (lang) (cardName)", value="Provides detailed information about the specified card.", inline=False)
         embed_en.add_field(name="!tr (original_lang) (cardName) (translate_lang)", value="Translates the name of the card from one language to another.", inline=False)
         embed_en.add_field(name="!search (lang) (cardName)", value="Searches cards based on a character sequence.", inline=False)
-        embed_en.add_field(name="!prices (lang) (cardName)", value="Shows the prices of the specified card.", inline=False)  # Adding the prices command
+        embed_en.add_field(name="!prices (lang) (cardName)", value="Shows the prices of the specified card.", inline=False) 
         await message.channel.send(embed=embed_en)
 
     elif message.content == 'ThunderBot hilfe':
-        # Embed message for German
+        #Embed message for German
         embed_de = discord.Embed(title="Verfügbare Befehle", description="Liste der verfügbaren Befehle, die mit dem Bot verwendet werden können:", color=0x7289da)
         embed_de.add_field(name="!card (lang) (Kartenname)", value="Gibt das Bild der angegebenen Karte zurück.", inline=False)
         embed_de.add_field(name="!info (lang) (Kartenname)", value="Gibt detaillierte Informationen zur angegebenen Karte zurück.", inline=False)
         embed_de.add_field(name="!tr (original_lang) (Kartenname) (translate_lang)", value="Übersetzt den Namen der Karte von einer Sprache in eine andere.", inline=False)
         embed_de.add_field(name="!search (lang) (Kartenname)", value="Sucht nach Karten anhand einer Zeichenfolge.", inline=False)
-        embed_de.add_field(name="!prices (lang) (Kartenname)", value="Zeigt die Preise der angegebenen Karte an.", inline=False)  # Adding the prices command
+        embed_de.add_field(name="!prices (lang) (Kartenname)", value="Zeigt die Preise der angegebenen Karte an.", inline=False)  
         await message.channel.send(embed=embed_de)
 
     elif message.content == 'ThunderBot aiuto':
-        # Embed message for Italian
+        #Embed message for Italian
         embed_it = discord.Embed(title="Comandi disponibili", description="Elenco dei comandi disponibili da utilizzare con il bot:", color=0x7289da)
         embed_it.add_field(name="!card (lang) (nomeCarta)", value="Restituisce l'immagine della carta specificata.", inline=False)
         embed_it.add_field(name="!info (lang) (nomeCarta)", value="Fornisce informazioni dettagliate sulla carta specificata.", inline=False)
         embed_it.add_field(name="!tr (original_lang) (nomeCarta) (translate_lang)", value="Traduce il nome della carta da una lingua all'altra.", inline=False)
         embed_it.add_field(name="!search (lang) (nomeCarta)", value="Cerca carte basate su una sequenza di caratteri.", inline=False)
-        embed_it.add_field(name="!prices (lang) (nomeCarta)", value="Mostra i prezzi della carta specificata.", inline=False)  # Adding the prices command
+        embed_it.add_field(name="!prices (lang) (nomeCarta)", value="Mostra i prezzi della carta specificata.", inline=False)  
         await message.channel.send(embed=embed_it)
 
     elif message.content == 'ThunderBot aide':
-        # Embed message for French
+        #Embed message for French
         embed_fr = discord.Embed(title="Commandes disponibles", description="Liste des commandes disponibles à utiliser avec le bot:", color=0x7289da)
         embed_fr.add_field(name="!card (lang) (nomCarte)", value="Renvoie l'image de la carte spécifiée.", inline=False)
         embed_fr.add_field(name="!info (lang) (nomCarte)", value="Fournit des informations détaillées sur la carte spécifiée.", inline=False)
         embed_fr.add_field(name="!tr (original_lang) (nomCarte) (translate_lang)", value="Traduit le nom de la carte d'une langue à une autre.", inline=False)
         embed_fr.add_field(name="!search (lang) (nomCarte)", value="Recherche des cartes basées sur une séquence de caractères.", inline=False)
-        embed_fr.add_field(name="!prices (lang) (nomCarte)", value="Affiche les prix de la carte spécifiée.", inline=False)  # Adding the prices command
+        embed_fr.add_field(name="!prices (lang) (nomCarte)", value="Affiche les prix de la carte spécifiée.", inline=False)  
         await message.channel.send(embed=embed_fr)
+        
     # Call the default command processing after the on_message event
     await bot.process_commands(message)
-
-
+#
+    
 #run 
 load_dotenv()
 disc_api_key = os.getenv('DISCORD_API_KEY')
