@@ -44,7 +44,7 @@ ThunderBot is a Discord bot designed to provide information about Yu-Gi-Oh! trad
 4. Run the bot:
 
    ```bash
-   python thunderbot.py
+   python bot.py
    ```
 
 ## Usage
