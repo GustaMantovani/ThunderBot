@@ -31,7 +31,6 @@ ThunderBot is a Discord bot designed to provide information about Yu-Gi-Oh! trad
 2. Install dependencies:
 
    ```bash
-   cd ThunderBot
    ./setup.sh
    ```
 
