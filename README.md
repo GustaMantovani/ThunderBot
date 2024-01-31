@@ -12,13 +12,6 @@ ThunderBot is a Discord bot designed to provide information about Yu-Gi-Oh! trad
 
 ## Getting Started
 
-### Prerequisites
-
-- Python 3.x
-- Discord.py library (`pip install discord.py`)
-- Requests library (`pip install requests`)
-- Python-dotenv library (`pip install python-dotenv`)
-
 ### Setup
 
 1. Clone the repository:
