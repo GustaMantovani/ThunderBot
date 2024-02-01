@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 #Performing an initial request before the application starts to enhance the bot's response time. According to the official prodeck documentation, this is the only required endpoint
 requests.get('https://db.ygoprodeck.com/api/v7/cardinfo.php')
 
-#functions
+#Functions
 def proDeckAPI_request(params):
     url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
     response = requests.get(url, params=params)
@@ -65,17 +65,17 @@ def search_by_string_and_lang(lang,name):
     return proDeckAPI_request(params)
 #
 
-#instances
-##bot
+#Instances
+##Bot
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents, help_command = None)
 
-##channel
+##Channel
 channel = discord.channel.TextChannel
 #
 
-#init
+#Init
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
@@ -340,11 +340,11 @@ async def on_message(message):
         embed_fr.add_field(name="!prices (lang) (nomCarte)", value="Affiche les prix de la carte spécifiée.", inline=False)  
         await message.channel.send(embed=embed_fr)
 
-    # Call the default command processing after the on_message event
+    #Call the default command processing after the on_message event
     await bot.process_commands(message)
 #
     
-#run 
+#Run 
 load_dotenv()
 disc_api_key = os.getenv('DISCORD_API_KEY')
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
